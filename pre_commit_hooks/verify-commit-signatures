@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# This pre-push hook prevents a user from pushing any local work if at least
+# one commit has not been signed.
+
+COLOR_ON="\033[0;33m"
+COLOR_OFF="\033[0m"
+
+git verify-commit $(git rev-list HEAD) 2> /dev/null
+
+if [ $? -eq 1 ]
+then
+    echo >&2 "${COLOR_ON}error: unsigned commits${COLOR_OFF}"
+    echo >&2 $(git log --format="%G? %H" | grep ^N | sed "s/N \(.*\)/\1/")
+    exit 1
+fi

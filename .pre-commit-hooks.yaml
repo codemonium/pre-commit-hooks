@@ -1,0 +1,10 @@
+- id: commit-signatures
+  name: Verify Commit Signatures
+  description: This pre-push hook prevents a user from pushing any local work if at least one commit has not been signed.
+  entry: verify-commit-signatures
+  language: script
+  always_run: true
+  fail_fast: true
+  verbose: true
+  stages:
+    - push
